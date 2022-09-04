@@ -60,3 +60,8 @@ resource "aws_iam_policy" "bucket" {
   path   = "/"
   policy = data.aws_iam_policy_document.bucket.json
 }
+
+resource "aws_iam_role_policy_attachment" "bucket" {
+  role       = aws_iam_role.ec2.name
+  policy_arn = aws_iam_policy.bucket.arn
+}
