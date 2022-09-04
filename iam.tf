@@ -28,3 +28,35 @@ resource "aws_iam_instance_profile" "ec2" {
   role = aws_iam_role.ec2.name
 }
 
+# s3 policy
+data "aws_iam_policy_document" "bucket" {
+  statement {
+    sid = "1"
+
+    actions = [
+      "s3:ListAllMyBuckets",
+      "s3:GetBucketLocation",
+    ]
+
+    resources = [
+      "arn:aws:s3:::*",
+    ]
+  }
+
+  statement {
+    actions = [
+      "s3:*",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.bucket.id}",
+      "arn:aws:s3:::${aws_s3_bucket.bucket.id}/*",
+    ]
+  }
+}
+
+resource "aws_iam_policy" "bucket" {
+  name   = "bucket_policy"
+  path   = "/"
+  policy = data.aws_iam_policy_document.bucket.json
+}
