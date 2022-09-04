@@ -16,3 +16,7 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
+
+data "aws_iam_policy" "ssm" {
+  name = "AmazonSSMManagedInstanceCore"
+}

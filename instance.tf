@@ -3,7 +3,8 @@ resource "aws_instance" "web1" {
   instance_type = "t3.micro"
   subnet_id     = aws_subnet.private1.id
   key_name      = aws_key_pair.deployer.key_name
-
+  iam_instance_profile = aws_iam_instance_profile.ec2.name
+  
   tags = {
     Name = "http_server_1"
   }
@@ -18,6 +19,7 @@ resource "aws_instance" "web2" {
   instance_type = "t3.micro"
   subnet_id     = aws_subnet.private2.id
   key_name      = aws_key_pair.deployer.key_name
+  iam_instance_profile = aws_iam_instance_profile.ec2.name
 
   tags = {
     Name = "http_server_2"
